@@ -47,6 +47,29 @@ def is_valid(url):
         parsed = urlparse(url)
         if parsed.scheme not in set(["http", "https"]):
             return False
+        allowed_domains = [
+            "ics.uci.edu",
+            "cs.uci.edu",
+            "informatics.uci.edu",
+            "stat.uci.edu"
+        ]
+
+        
+        if not any(parsed.netloc.endswith(domain) for domain in allowed_domains):
+            return False
+            
+        trap_keywords = [
+            "calendar", "login", "logout", "signup", "register",
+            "wp-json", "xmlrpc", "session", "?sort=", "?filter="
+        ]
+        
+        if any(keyword in url for keyword in trap_keywords):
+            return False
+            
+        path_parts = parsed.path.split("/")
+        if len(path_parts) != len(set(path_parts)) and len(path_parts) > 6:
+            return False
+        
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
