@@ -33,7 +33,7 @@ def is_valid(url):
         ]
 
         
-        if not any(domain in parsed.netloc for domain in allowed_domains):
+        if not any(parsed.netloc.endswith(domain) for domain in allowed_domains):
             return False
             
         trap_keywords = [
