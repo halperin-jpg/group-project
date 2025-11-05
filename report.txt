@@ -1,0 +1,103 @@
+1. Unique pages found: 3252
+
+2. Longest page: http://www.ics.uci.edu/~eppstein/junkyard/all.html
+   Word count: 15532
+
+3. 50 most common words (excluding stop words):
+   1. research: 10838
+   2. uci: 9532
+   3. ics: 9452
+   4. science: 7185
+   5. physics: 7094
+   6. student: 6722
+   7. computer: 6639
+   8. university: 6581
+   9. data: 6141
+   10. learning: 5910
+   11. graduate: 5848
+   12. irvine: 5547
+   13. news: 5452
+   14. information: 5117
+   15. undergraduate: 4992
+   16. faculty: 4865
+   17. one: 4858
+   18. students: 4644
+   19. html: 4433
+   20. new: 3946
+   21. department: 3882
+   22. update: 3822
+   23. events: 3799
+   24. program: 3777
+   25. home: 3776
+   26. software: 3775
+   27. community: 3556
+   28. time: 3440
+   29. markellekelly: 3412
+   30. automatic: 3323
+   31. may: 3317
+   32. machine: 3279
+   33. systems: 3262
+   34. search: 3212
+   35. school: 3111
+   36. informatics: 3083
+   37. project: 2937
+   38. computing: 2837
+   39. use: 2773
+   40. also: 2756
+   41. awards: 2746
+   42. view: 2724
+   43. work: 2681
+   44. two: 2671
+   45. edu: 2654
+   46. contact: 2642
+   47. statistics: 2621
+   48. california: 2620
+   49. lab: 2603
+   50. professor: 2550
+
+4. Subdomains found in uci.edu domain: 44
+   Subdomain, Unique Pages:
+   acoi.ics.uci.edu, 5
+   archive.ics.uci.edu, 98
+   asterix.ics.uci.edu, 1
+   betapro.proteomics.ics.uci.edu, 1
+   cdb.ics.uci.edu, 21
+   cert.ics.uci.edu, 10
+   chenli.ics.uci.edu, 1
+   circadiomics.ics.uci.edu, 4
+   cml.ics.uci.edu, 104
+   computableplant.ics.uci.edu, 51
+   cs.ics.uci.edu, 1
+   cs.uci.edu, 1
+   cyberclub.ics.uci.edu, 7
+   cybert.ics.uci.edu, 23
+   ds4all.ics.uci.edu, 1
+   duttgroup.ics.uci.edu, 93
+   dynamo.ics.uci.edu, 12
+   flamingo.ics.uci.edu, 3
+   graphics.ics.uci.edu, 1
+   hobbes.ics.uci.edu, 9
+   i-sensorium.ics.uci.edu, 4
+   icde2023.ics.uci.edu, 43
+   ics.uci.edu, 462
+   informatics.ics.uci.edu, 1
+   isg.ics.uci.edu, 85
+   jdsylab.physics.uci.edu, 25
+   mailman.ics.uci.edu, 21
+   mover.ics.uci.edu, 23
+   mupro.proteomics.ics.uci.edu, 2
+   pepito.proteomics.ics.uci.edu, 4
+   physics.uci.edu, 57
+   plrg.eecs.uci.edu, 6
+   plrg.ics.uci.edu, 15
+   scale.ics.uci.edu, 6
+   scratch.proteomics.ics.uci.edu, 2
+   seal.ics.uci.edu, 36
+   selectpro.proteomics.ics.uci.edu, 4
+   statconsulting.ics.uci.edu, 3
+   statistics-stage.ics.uci.edu, 9
+   www.ics.uci.edu, 1297
+   www.informatics.uci.edu, 89
+   www.nacs.uci.edu, 2
+   www.physics.uci.edu, 505
+   www.stat.uci.edu, 104
