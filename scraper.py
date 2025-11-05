@@ -91,15 +91,10 @@ def extract_next_links(url, resp):
         with lock_urls:
             if clean_url not in url_set:
                 url_set.add(clean_url)
-                parts = url_parsed.netloc.split('.')
-                if len(parts) >= 2:
-                    domain_base = '.'.join(parts[-2:])
-                    if len(parts) > 2:
-                        full_domain = '.'.join(parts[:-2]) + '.' + domain_base
-                    else:
-                        full_domain = domain_base
+                netloc = url_parsed.netloc.lower()
+                if netloc.endswith('.uci.edu') or netloc == 'uci.edu':
                     with lock_domains:
-                        domain_counts[full_domain] += 1
+                        domain_counts[netloc] += 1
         
     except Exception:
         pass
@@ -265,8 +260,10 @@ def generate_report():
         output.append(f"   {i}. {word}: {freq}")
     output.append("")
     
-    sorted_domains = sorted(domain_counts.items())
-    output.append(f"4. Subdomains found: {len(sorted_domains)}")
+    uci_subdomains = {domain: count for domain, count in domain_counts.items() 
+                      if domain.endswith('.uci.edu') or domain == 'uci.edu'}
+    sorted_domains = sorted(uci_subdomains.items())
+    output.append(f"4. Subdomains found in uci.edu domain: {len(sorted_domains)}")
     output.append("   Subdomain, Unique Pages:")
     for domain, count in sorted_domains:
         output.append(f"   {domain}, {count}")
