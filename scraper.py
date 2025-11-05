@@ -155,8 +155,8 @@ def extract_next_links(url, resp):
 def is_valid(url):
     try:
         parsed_url = urlparse(url)
-                if parsed_url.scheme not in {"http", "https"}:
-            return False
+        if parsed_url.scheme not in {"http", "https"}:
+        return False
         
         allowed_domains = ["ics.uci.edu", "cs.uci.edu", "informatics.uci.edu", "stat.uci.edu"]
         if not any(parsed_url.netloc.lower().endswith(domain) for domain in allowed_domains):
