@@ -35,7 +35,8 @@ except:
     "weren't", 'what', "what's", 'when', "when's", 'where', "where's", 'which', 
     'while', 'who', "who's", 'whom', 'why', "why's", 'with', "won't", 'would', 
     "wouldn't", 'you', "you'd", "you'll", "you're", "you've", 'your', 'yours', 
-    'yourself', 'yourselves'
+    'yourself', 'yourselves', 'cc', 'cl', 'nc', 'oc', 'nh', 'occ', 'ccc', 'us', 'one', 'may', 'can', 'will', 'also', 'much', 'well', 'back', 'even',
+    'just', 'way', 'get', 'make', 'go', 'see', 'know', 'take', 'use', 'find', 's', 'd', 'p', 'b', 'm', 'j', 'n', 'e', 't', 'o', '10', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'
 }
 
 url_set = set()
@@ -295,4 +296,5 @@ def generate_report():
         f.write(report_text)
     
     print(report_text)
+
 
