@@ -35,8 +35,11 @@ except:
     "weren't", 'what', "what's", 'when', "when's", 'where', "where's", 'which', 
     'while', 'who', "who's", 'whom', 'why', "why's", 'with', "won't", 'would', 
     "wouldn't", 'you', "you'd", "you'll", "you're", "you've", 'your', 'yours', 
-    'yourself', 'yourselves', 'cc', 'cl', 'nc', 'oc', 'nh', 'occ', 'ccc', 'us', 'one', 'may', 'can', 'will', 'also', 'much', 'well', 'back', 'even',
-    'just', 'way', 'get', 'make', 'go', 'see', 'know', 'take', 'use', 'find', 's', 'd', 'p', 'b', 'm', 'j', 'n', 'e', 't', 'o', '10', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'
+    'yourself', 'yourselves', 'cc', 'cl', 'nc', 'oc', 'nh', 'occ', 'ccc', 'us', 
+    'one', 'may', 'can', 'will', 'also', 'much', 'well', 'back', 'even',
+    'just', 'way', 'get', 'make', 'go', 'see', 'know', 'take', 'use', 'find', 
+    's', 'd', 'p', 'b', 'm', 'j', 'n', 'e', 't', 'o', '10', '2017', '2018', 
+    '2019', '2020', '2021', '2022', '2023', '2024', '2025'
 }
 
 url_set = set()
@@ -150,39 +153,44 @@ def extract_next_links(url, resp):
         return []
 
 def is_valid(url):
-    bad_urls = {
-        "https://isg.ics.uci.edu/wp-login.php",
-        "https://grape.ics.uci.edu/wiki/asterix",
-        "https://ics.uci.edu/events/category/student-experience/day",
-        "https://grape.ics.uci.edu/wiki/public/zip-attachment",
-        "https://grape.ics.uci.edu/wiki/public/raw-attachment",
-        "https://isg.ics.uci.edu/events",
-        "https://grape.ics.uci.edu/wiki/public/wiki",
-        "https://grape.ics.uci.edu/wiki/public/timeline?",
-        "http://www.ics.uci.edu/~babaks/BWR/Home_files",
-    }
-    
-    for bad in bad_urls:
-        if url.startswith(bad):
-            return False
-    
     try:
-        url_parts = urlparse(url)
-        if url_parts.scheme not in {"http", "https"}:
+        parsed_url = urlparse(url)
+                if parsed_url.scheme not in {"http", "https"}:
             return False
         
-        valid_domains = ["ics.uci.edu", "cs.uci.edu", "informatics.uci.edu", "stat.uci.edu"]
-        
-        if not any(url_parts.netloc.lower().endswith(d) for d in valid_domains):
+        allowed_domains = ["ics.uci.edu", "cs.uci.edu", "informatics.uci.edu", "stat.uci.edu"]
+        if not any(parsed_url.netloc.lower().endswith(domain) for domain in allowed_domains):
             return False
         
-        blocked = ["wics.ics.uci.edu", "ngs.ics.uci.edu", "www.cecs.uci.edu"]
-        if url_parts.netloc.lower() in blocked:
+        banned_hosts = ["wics.ics.uci.edu", "ngs.ics.uci.edu", "www.cecs.uci.edu"]
+        if parsed_url.netloc.lower() in banned_hosts:
             return False
         
-        url_low = url.lower()
-        path_low = (url_parts.path or "").lower()
-        query_low = (url_parts.query or "").lower()
+        normalized_url = url.lower()
+        path_part = (parsed_url.path or "").lower()
+        query_part = (parsed_url.query or "").lower()
+        
+        if "wp-login" in normalized_url:
+            return False
+        
+        if "grape.ics.uci.edu/wiki" in normalized_url:
+            wiki_blocked = ["/asterix", "/public/zip-attachment", "/public/raw-attachment", 
+                           "/public/wiki", "/public/timeline"]
+            if any(blocked in path_part for blocked in wiki_blocked):
+                return False
+        
+        if "/events" in path_part:
+            if any(host in normalized_url for host in ["ics.uci.edu", "isg.ics.uci.edu"]):
+                return False
+        
+        if "tribe" in query_part or "tribe" in path_part:
+            return False
+        
+        if "mlphysics.ics.uci.edu" in normalized_url and "/data" in path_part:
+            return False
+        
+        if "~babaks/bwr" in normalized_url and "home_files" in path_part:
+            return False
         
         if re.search(r"^https?://www\.stat\.uci\.edu/wp-content/uploads/[A-Za-z\-]+-?Abstract-?\d{1,2}-\d{1,2}-(?:\d{2}|\d{4})", url):
             return False
@@ -196,58 +204,49 @@ def is_valid(url):
         if re.search(r"^https?://helpdesk\.ics\.uci\.edu/Ticket/Display\.html\?id=\d+$", url):
             return False
         
-        if "doku.php" in url_low:
-            return False
-        
-        if "?tribe" in url_low:
+        if "doku.php" in normalized_url:
             return False
         
         if re.search(r"^https?://(?:www\.)?ics\.uci\.edu/~eppstein/pix", url):
             return False
         
-        if re.search(r"[?&]format=txt", url_low):
-            return False
-        
-        if "wp-login" in url_low:
+        if re.search(r"[?&]format=txt", normalized_url):
             return False
         
         if re.search(r"^https?://www\.ics\.uci\.edu/~ziv/.*\.htm$", url):
             return False
         
-        if "wics.ics.uci.edu" in url_low and ("?share=twitter" in url_low or "?share=facebook" in url_low or "/events" in url_low or "attachment" in url_low):
+        if "wics.ics.uci.edu" in normalized_url and ("?share=twitter" in normalized_url or "?share=facebook" in normalized_url or "attachment" in normalized_url):
             return False
         
-        if "ics.uci.edu/events/" in url_low:
-            return False
-        
-        bad_patterns = [
-            r'/calendar', r'/event', r'/events', r'/login', r'/logout',
-            r'/signup', r'/register', r'/wp-json', r'/wp-admin',
-            r'/doku\.php', r'/~eppstein/pix', r'/~eppstein/pubs',
-            r'ical', r'tribe', r'filter', r'sort', r'share',
-            r'replytocom', r'feed', r'session', r'/ca/rules/'
+        # General bad patterns
+        problematic_patterns = [
+            r'/calendar', r'/login', r'/logout', r'/signup', r'/register', 
+            r'/wp-json', r'/wp-admin', r'/~eppstein/pubs',
+            r'filter', r'sort', r'share', r'replytocom', r'feed', r'session'
         ]
         
-        for pattern in bad_patterns:
-            if re.search(pattern, url_low):
+        for pattern in problematic_patterns:
+            if re.search(pattern, normalized_url):
                 return False
         
         if len(url) > 250:
             return False
         
-        path_segments = [s for s in path_low.split('/') if s]
+        path_segments = [segment for segment in path_part.split('/') if segment]
         if len(path_segments) != len(set(path_segments)):
             return False
         
-        if url_parts.query:
-            if len(url_parts.query.split('&')) > 4:
+        if parsed_url.query:
+            if len(parsed_url.query.split('&')) > 4:
                 return False
-            if re.search(r'(page|p|offset|limit)=\d+', query_low):
+            if re.search(r'(page|p|offset|limit)=\d+', query_part):
                 return False
         
-        if re.search(r'(replytocom|comments?|reply|feed)', query_low):
+        if re.search(r'(replytocom|comments?|reply)', query_part):
             return False
         
+        # Filter file extensions
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
@@ -257,7 +256,7 @@ def is_valid(url):
             + r"|epub|dll|cnf|tgz|sha1"
             + r"|thmx|mso|arff|rtf|jar|csv"
             + r"|rm|smil|wmv|swf|wma|zip|rar|gz"
-            + r"|svg|xml|img|apk|bib|htm|odc|pps|ppsx|lif|rle|nb|tsv|Z|ma)$", path_low)
+            + r"|svg|xml|img|apk|bib|htm|odc|pps|ppsx|lif|rle|nb|tsv|Z|ma)$", path_part)
     
     except (TypeError, AttributeError, ValueError):
         return False
@@ -296,5 +295,3 @@ def generate_report():
         f.write(report_text)
     
     print(report_text)
-
-
