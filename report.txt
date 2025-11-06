@@ -1,3 +1,5 @@
+Johnathan Halperin 2664106, Devan Wong 80872576, William Zheng 18287372, Kenny Nguyen 73367340.
+
 1. Unique pages found: 3252
 
 2. Longest page: http://www.ics.uci.edu/~eppstein/junkyard/all.html
